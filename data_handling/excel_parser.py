@@ -92,10 +92,10 @@ class ReadExcelData(object):
             end_col = cell.max_col
             cell_value = sheet.cell(row=start_row, column=start_col).value
 
+            # mergecell_tuple【起始行，结束行，起始列，结束列，】
             mergecell_tuple = tuple([start_row, end_row, start_col, end_col, cell_value])
             mergecell_list.append(mergecell_tuple)
         return mergecell_list
-
 
 
 if __name__ == '__main__':
