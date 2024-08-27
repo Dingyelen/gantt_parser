@@ -93,7 +93,9 @@ class ReadExcelData(object):
             cell_value = sheet.cell(row=start_row, column=start_col).value
 
             # mergecell_tuple【起始行，结束行，起始列，结束列，】
-            mergecell_tuple = tuple([start_row, end_row, start_col, end_col, cell_value])
+            # mergecell_tuple = tuple([start_row, end_row, start_col, end_col, cell_value])
+            mergecell_tuple = dict(start_row=start_row, end_row=end_row, start_col=start_col, end_col=end_col, cell_value=cell_value)
+
             mergecell_list.append(mergecell_tuple)
         return mergecell_list
 
