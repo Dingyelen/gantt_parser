@@ -2,7 +2,7 @@
 # @Author: dingyelen
 # @Date:   2024-08-27 11:08:06
 # @Last Modified by:   dingyelen
-# @Last Modified time: 2024-08-27 17:28:04
+# @Last Modified time: 2024-08-28 11:14:38
 
 
 import pandas as pd
@@ -56,12 +56,12 @@ class GanttData(object):
 
         gantt_task_data = self.task_to_date()
         gantt_task_data_df = pd.DataFrame(gantt_task_data)
-        gantt_task_data_df['start_date_fit'] = gantt_task_data_df['start_date'].apply(lambda x: x if x>=start_date else start_date)
-        gantt_task_data_df['end_date_fit'] = gantt_task_data_df['end_date'].apply(lambda x: x if x<=end_date else end_date)
-        gantt_task_data_df['duration_fit'] = gantt_task_data_df.apply(lambda x: (x.end_date_fit-x.start_date_fit).days+1, axis=1)
+        gantt_task_data_df['start_date'] = gantt_task_data_df['start_date'].apply(lambda x: x if x>=start_date else start_date)
+        gantt_task_data_df['end_date'] = gantt_task_data_df['end_date'].apply(lambda x: x if x<=end_date else end_date)
+        gantt_task_data_df['duration'] = gantt_task_data_df.apply(lambda x: (x.end_date-x.start_date).days+1, axis=1)
 
         gantt_task_data_select = gantt_task_data_df[(gantt_task_data_df.end_date>=start_date)&(gantt_task_data_df.start_date<=end_date)]
-        gantt_task_data_select = gantt_task_data_select.loc[:, ['task_name', 'start_date_fit', 'end_date_fit', 'duration_fit']]
+        gantt_task_data_select = gantt_task_data_select.loc[:, ['task_name', 'start_date', 'end_date', 'duration']]
         # gantt_date_data【活动名，开始日期，结束日期，天数】
         gantt_date_data = gantt_task_data_select.to_dict(orient='records')
         
@@ -73,4 +73,5 @@ if __name__ == '__main__':
     test = GanttData(file_path, '活动排期', 4)
 
     # print(test.task_to_date())
+    print(len(test.date_to_task('2020-07-01', '2020-07-07')))
     print(test.date_to_task('2020-07-01', '2020-07-07'))
